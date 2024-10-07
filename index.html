@@ -1,7 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        #timer {
+            font-size: 2rem;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        #timer span {
+            margin: 0 5px;
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>velkommen til min side.</p>
+
+<div id="timer">
+    <span id="days">00</span> Days 
+    <span id="hours">00</span> Hours 
+    <span id="minutes">00</span> Minutes 
+    <span id="seconds">00</span> Seconds
+</div>
+
+<script>
+    // Set the event date and time (YYYY-MM-DDTHH:MM:SS)
+    const eventDate = new Date('2024-12-31T23:59:59').getTime();
+
+    // Update the timer every second
+    const timerInterval = setInterval(function() {
+        const now = new Date().getTime();
+        const timeLeft = eventDate - now;
+
+        // Time calculations
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Display the result in the timer
+        document.getElementById('days').innerHTML = days < 10 ? '0' + days : days;
+        document.getElementById('hours').innerHTML = hours < 10 ? '0' + hours : hours;
+        document.getElementById('minutes').innerHTML = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById('seconds').innerHTML = seconds < 10 ? '0' + seconds : seconds;
+
+        // If the countdown is over, display a message
+        if (timeLeft < 0) {
+            clearInterval(timerInterval);
+            document.getElementById('timer').innerHTML = "The event has started!";
+        }
+    }, 1000);
+</script>
+
 </body>
 </html>
